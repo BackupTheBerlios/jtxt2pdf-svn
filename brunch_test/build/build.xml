@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<project basedir=".." default="build" name="jTxt2PDF">
+
+	<property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+	<property name="distribute" value="distribute"/>
+	
+    <path id="jTxt2PDF.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/iText-2.0.8.jar"/>
+    </path>
+	
+    <target name="init" depends="clean">
+        <mkdir dir="bin"/>
+    	<mkdir dir="${distribute}"/>
+    </target>
+	
+    <target name="clean">
+        <delete dir="bin"/>
+    	<delete dir="distribute"/>
+    </target>
+	
+	<target name="build" depends="init">
+		
+		<buildnumber file="build\version.properties"/>
+		
+		<copy todir="src\lff\jtxt2pdf\">
+			<fileset dir="build">
+			    <include name="version.properties"/>
+			</fileset>
+		</copy>
+		
+        <javac debug="true" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="jTxt2PDF.classpath"/>
+        </javac>	
+
+		<copy todir="bin\lff\jtxt2pdf\i18n">
+			<fileset dir="src\lff\jtxt2pdf\i18n">
+			    <include name="*.properties"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="bin\lff\jtxt2pdf">
+			<fileset dir="src\lff\jtxt2pdf">
+			    <include name="*.properties"/>
+			</fileset>
+		</copy>
+		
+	    <jar destfile="${distribute}/jtxt2pdf.jar"
+		    basedir="bin">
+		</jar>
+	    	
+	</target>
+
+</project>
