@@ -63,11 +63,11 @@ public class MainDialog extends JDialog {
 		add(btnExit);
 		btnExit.addActionListener(exitAction);
 		
-		btnAddFile = new JButton("Add Files");
+		btnAddFile = new JButton(I18NUtility.getMessage("md.addfiles"));
 		btnAddFile.setBounds(10, 70, 90, 25);
 		pnlFile.add(btnAddFile);
 		
-		btnAddFolder = new JButton("Add Folder");
+		btnAddFolder = new JButton(I18NUtility.getMessage("md.addfolder"));
 		btnAddFolder.setBounds(120, 70, 90, 25);
 		pnlFile.add(btnAddFolder);
 		
@@ -86,6 +86,7 @@ public class MainDialog extends JDialog {
 		pnlFile.add(btnChooseOutput);
 		
 		
+		
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowListener() {
 
@@ -102,6 +103,7 @@ public class MainDialog extends JDialog {
 			}
 
 			public void windowDeactivated(WindowEvent e) {
+
 			}
 
 			public void windowDeiconified(WindowEvent e) {
