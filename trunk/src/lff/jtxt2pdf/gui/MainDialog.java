@@ -64,23 +64,23 @@ public class MainDialog extends JDialog {
 		btnExit.addActionListener(exitAction);
 		
 		btnAddFile = new JButton("Add Files");
-		btnAddFile.setBounds(10, 10, 90, 25);
+		btnAddFile.setBounds(10, 70, 90, 25);
 		pnlFile.add(btnAddFile);
 		
 		btnAddFolder = new JButton("Add Folder");
-		btnAddFolder.setBounds(120, 10, 90, 25);
+		btnAddFolder.setBounds(120, 70, 90, 25);
 		pnlFile.add(btnAddFolder);
 		
 		lblOutput = new JLabel("Output Folder");
-		lblOutput.setBounds(15, 30, 100, 40);
+		lblOutput.setBounds(15, 0, 100, 40);
 		pnlFile.add(lblOutput);
 		
 		edtOutput = new JTextField("");
-		edtOutput.setBounds(10, 65, 500, 20);
+		edtOutput.setBounds(10, 35, 500, 20);
 		pnlFile.add(edtOutput);
 		
 		btnChooseOutput = new JButton("...");
-		btnChooseOutput.setBounds(515, 65, 30, 20);
+		btnChooseOutput.setBounds(515, 35, 30, 20);
 		btnChooseOutput.addActionListener(new OutputFolderChooseListener(
 				new OutputFolderCallback(this.edtOutput)));
 		pnlFile.add(btnChooseOutput);
