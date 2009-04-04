@@ -7,6 +7,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,7 +37,9 @@ public class MainDialog extends JDialog {
 	private JLabel lblOutput;
 	private JTextField edtOutput;
 	private JButton btnChooseOutput;
-
+	private JCheckBox chkSubFolder;
+	
+	
 	private ActionListener exitAction = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(confirmExit())  {
@@ -84,6 +87,12 @@ public class MainDialog extends JDialog {
 		btnChooseOutput.addActionListener(new OutputFolderChooseListener(
 				new OutputFolderCallback(this.edtOutput)));
 		pnlFile.add(btnChooseOutput);
+		
+		chkSubFolder = new JCheckBox();
+		chkSubFolder.setText("Include SubFolders");
+		chkSubFolder.setBounds(231, 69, 160, 26);
+		chkSubFolder.setSelected(true);
+		pnlFile.add(chkSubFolder);
 		
 		
 		
@@ -162,7 +171,7 @@ public class MainDialog extends JDialog {
 			tabMain = new JTabbedPane();
 			tabMain.addTab(I18NUtility.getMessage("md.files"), getFilesPanel());
 			tabMain.addTab(I18NUtility.getMessage("md.configs"), getConfigPanel());
-			tabMain.setBounds(15, 10, 610, 380);
+			tabMain.setBounds(5, 0, 610, 380);
 		}
 		return tabMain;
 	}
