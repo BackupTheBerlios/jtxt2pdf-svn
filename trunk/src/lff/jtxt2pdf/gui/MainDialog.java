@@ -16,10 +16,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import lff.jtxt2pdf.Version;
+import lff.jtxt2pdf.gui.model.ListTableModel;
+import lff.jtxt2pdf.gui.render.ColoredTableRender;
 import lff.jtxt2pdf.utility.I18NUtility;
 
 public class MainDialog extends JDialog {
@@ -38,6 +42,8 @@ public class MainDialog extends JDialog {
 	private JTextField edtOutput;
 	private JButton btnChooseOutput;
 	private JCheckBox chkSubFolder;
+	private JTable tblData;
+	private JScrollPane scData;
 	
 	
 	private ActionListener exitAction = new ActionListener() {
@@ -67,11 +73,11 @@ public class MainDialog extends JDialog {
 		btnExit.addActionListener(exitAction);
 		
 		btnAddFile = new JButton(I18NUtility.getMessage("md.addfiles"));
-		btnAddFile.setBounds(10, 70, 90, 25);
+		btnAddFile.setBounds(10, 67, 90, 25);
 		pnlFile.add(btnAddFile);
 		
 		btnAddFolder = new JButton(I18NUtility.getMessage("md.addfolder"));
-		btnAddFolder.setBounds(120, 70, 90, 25);
+		btnAddFolder.setBounds(120, 67, 90, 25);
 		pnlFile.add(btnAddFolder);
 		
 		lblOutput = new JLabel("Output Folder");
@@ -79,11 +85,11 @@ public class MainDialog extends JDialog {
 		pnlFile.add(lblOutput);
 		
 		edtOutput = new JTextField("");
-		edtOutput.setBounds(10, 35, 500, 20);
+		edtOutput.setBounds(10, 35, 535, 20);
 		pnlFile.add(edtOutput);
 		
 		btnChooseOutput = new JButton("...");
-		btnChooseOutput.setBounds(515, 35, 30, 20);
+		btnChooseOutput.setBounds(560, 35, 30, 20);
 		btnChooseOutput.addActionListener(new OutputFolderChooseListener(
 				new OutputFolderCallback(this.edtOutput)));
 		pnlFile.add(btnChooseOutput);
@@ -93,8 +99,19 @@ public class MainDialog extends JDialog {
 		chkSubFolder.setBounds(231, 69, 160, 26);
 		chkSubFolder.setSelected(true);
 		pnlFile.add(chkSubFolder);
+
 		
+		tblData = new JTable(new ListTableModel());
+		tblData.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+		for (int i = 0; i < tblData.getColumnCount(); i++)    {    
+			tblData.getColumn(tblData.getColumnName(i)).setCellRenderer(new ColoredTableRender());    
+        }  		
 		
+		scData = new JScrollPane(tblData);
+		scData.setBounds(10, 100, 580, 240);
+		
+		pnlFile.add(scData);
 		
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowListener() {
