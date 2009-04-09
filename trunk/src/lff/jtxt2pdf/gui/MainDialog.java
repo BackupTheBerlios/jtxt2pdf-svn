@@ -44,7 +44,7 @@ public class MainDialog extends JDialog {
 	private JCheckBox chkSubFolder;
 	private JTable tblData;
 	private JScrollPane scData;
-	
+	private ListTableModel listTableModel = new ListTableModel();
 	
 	private ActionListener exitAction = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -101,17 +101,22 @@ public class MainDialog extends JDialog {
 		pnlFile.add(chkSubFolder);
 
 		
-		tblData = new JTable(new ListTableModel());
+		tblData = new JTable(listTableModel);
 		tblData.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
+		
+		tblData.getColumn(tblData.getColumnName(0)).setPreferredWidth(450);
+		//tblData.getColumn(tblData.getColumnName(1)).setPreferredWidth(200);
 		for (int i = 0; i < tblData.getColumnCount(); i++)    {    
-			tblData.getColumn(tblData.getColumnName(i)).setCellRenderer(new ColoredTableRender());    
-        }  		
+			tblData.getColumn(tblData.getColumnName(i)).setCellRenderer(new ColoredTableRender());
+        }
 		
 		scData = new JScrollPane(tblData);
 		scData.setBounds(10, 100, 580, 240);
-		
 		pnlFile.add(scData);
+		
+		
+		
+		btnAddFile.addActionListener(new AddFileListener(new AddFileCallback(listTableModel)));
 		
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowListener() {
