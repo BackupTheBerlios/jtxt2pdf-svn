@@ -36,12 +36,12 @@ public class AddFileListener implements ActionListener {
 	}
 	
 	/**
-	 * Check output folder.
-	 * @param f File object of the output folder.
+	 * Check input file.
+	 * @param f File object of the input file.
 	 * @return If something is wrong, return false.
 	 */
 	private boolean checked(File f) {
-		//check writing right
+		//check reading right
 		if (!f.canRead()) {
 			JOptionPane.showMessageDialog(null, 
 					I18NUtility.getMessage("md.error.addfile.readable"),
