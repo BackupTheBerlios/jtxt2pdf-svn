@@ -32,8 +32,8 @@ public class ListTableModel extends AbstractTableModel {
 
 	public void AddRow(Entry ent) {
 		Data.getData().add(ent);
-		//fireTableRowsInserted(Data.getData().size() - 1, Data.getData().size());
-		fireTableDataChanged();
+		fireTableRowsInserted(Data.getData().size() - 1, Data.getData().size());
+		//fireTableDataChanged();
 	}
 	
 	public Object getValueAt(int rowIndex, int columnIndex) {

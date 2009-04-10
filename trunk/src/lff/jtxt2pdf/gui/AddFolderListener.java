@@ -6,22 +6,18 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import lff.jtxt2pdf.utility.I18NUtility;
 
-public class AddFileListener implements ActionListener {
+public class AddFolderListener implements ActionListener {
 
 	JFileChooser chooser;
-	IFileChooserCallback callback = null;
+	IFolderChooserCallback callback = null;
 	
-	public AddFileListener(IFileChooserCallback callback) {
+	public AddFolderListener(IFolderChooserCallback callback) {
 		this.callback = callback;
 		chooser = new JFileChooser();
-		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		FileFilter filter = new FileNameExtensionFilter("Text file", "txt");
-		chooser.setFileFilter(filter);
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -29,7 +25,7 @@ public class AddFileListener implements ActionListener {
 	     if(returnVal == JFileChooser.APPROVE_OPTION) {
              File f = chooser.getSelectedFile();
              if (checked(f)) {
-            	 callback.chooseFile(f);
+            	 callback.chooseFolder(f);
              }
 	     }
 
@@ -44,12 +40,11 @@ public class AddFileListener implements ActionListener {
 		//check reading right
 		if (!f.canRead()) {
 			JOptionPane.showMessageDialog(null, 
-					I18NUtility.getMessage("md.error.addfile.readable"),
+					I18NUtility.getMessage("md.error.addfolder.readable"),
 					I18NUtility.getMessage("md.error"), 
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
 	}
-
 }

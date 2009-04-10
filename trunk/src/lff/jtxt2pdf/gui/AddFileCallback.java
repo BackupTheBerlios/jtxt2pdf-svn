@@ -7,7 +7,7 @@ import lff.jtxt2pdf.gui.data.Entry;
 import lff.jtxt2pdf.gui.model.ListTableModel;
 import lff.jtxt2pdf.utility.FileUtility;
 
-public class AddFileCallback implements IFileChooserCallbak {
+public class AddFileCallback implements IFileChooserCallback {
 
 	private ListTableModel model;
 	

@@ -1,10 +1,14 @@
 package lff.jtxt2pdf.gui;
 
+import java.awt.Cursor;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -105,7 +110,7 @@ public class MainDialog extends JDialog {
 		tblData.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		
 		tblData.getColumn(tblData.getColumnName(0)).setPreferredWidth(450);
-		//tblData.getColumn(tblData.getColumnName(1)).setPreferredWidth(200);
+
 		for (int i = 0; i < tblData.getColumnCount(); i++)    {    
 			tblData.getColumn(tblData.getColumnName(i)).setCellRenderer(new ColoredTableRender());
         }
@@ -113,10 +118,12 @@ public class MainDialog extends JDialog {
 		scData = new JScrollPane(tblData);
 		scData.setBounds(10, 100, 580, 240);
 		pnlFile.add(scData);
-		
-		
+
+		tblData.addMouseListener(new PopListener(tblData));
+		scData.addMouseListener(new PopListener(tblData));
 		
 		btnAddFile.addActionListener(new AddFileListener(new AddFileCallback(listTableModel)));
+		btnAddFolder.addActionListener(new AddFolderListener(new AddFolderCallback(this)));
 		
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowListener() {
@@ -224,7 +231,7 @@ public class MainDialog extends JDialog {
 	}
 
 
-	public void chooseFolder(File f) {
-		
+	public ListTableModel getListTableModel() {
+		return this.listTableModel;
 	}
 }
