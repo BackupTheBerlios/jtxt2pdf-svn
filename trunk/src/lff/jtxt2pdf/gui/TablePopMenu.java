@@ -2,6 +2,7 @@ package lff.jtxt2pdf.gui;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 
 import lff.jtxt2pdf.gui.model.ListTableModel;
@@ -16,11 +17,13 @@ public class TablePopMenu {
 		mnuTable.add(new JMenuItem("Add Folder"));
 		mnuTableData.add(new JMenuItem("Add File"));
 		mnuTableData.add(new JMenuItem("Add Folder"));
+		mnuTableData.add(new JSeparator());
 		mnuTableData.add(new JMenuItem("Remove"));
 		mnuTableData.add(new JMenuItem("Remove All"));	
 
 		mnuTableRemove.add(new JMenuItem("Add File"));
 		mnuTableRemove.add(new JMenuItem("Add Folder"));
+		mnuTableRemove.add(new JSeparator());
 		mnuTableRemove.add(new JMenuItem("Remove All"));	
 	}
 	
