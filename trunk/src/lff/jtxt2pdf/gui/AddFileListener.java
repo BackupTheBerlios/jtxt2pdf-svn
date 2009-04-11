@@ -7,7 +7,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import lff.jtxt2pdf.utility.I18NUtility;
 
@@ -20,7 +19,7 @@ public class AddFileListener implements ActionListener {
 		this.callback = callback;
 		chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		FileFilter filter = new FileNameExtensionFilter("Text file", "txt");
+		FileFilter filter = new TxtFileFilter();
 		chooser.setFileFilter(filter);
 	}
 	
@@ -52,4 +51,20 @@ public class AddFileListener implements ActionListener {
 		return true;
 	}
 
+}
+
+class TxtFileFilter extends FileFilter {
+
+	public boolean accept(File f) {
+		if (f.isDirectory()) {
+			return true;
+		}
+		String name = f.getAbsolutePath().toLowerCase();
+		return name.endsWith(".txt");
+	}
+
+	public String getDescription() {
+		return "Text Files";
+	}
+	
 }

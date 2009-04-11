@@ -1,12 +1,8 @@
 package lff.jtxt2pdf.gui;
 
-import java.awt.Cursor;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -68,12 +64,12 @@ public class MainDialog extends JDialog {
 		setLayout(null);
 		add(getTabMain());
 		setJMenuBar(getMenuBar());
-		setSize(655, 500);
+		setSize(628, 500);
 		setVisible(false);
 		setTitle("jTxt2PDF " + Version.getVersion());
 		
 		btnExit = new JButton("Exit");
-		btnExit.setBounds(578, 400, 50, 25);
+		btnExit.setBounds(565, 400, 50, 25);
 		add(btnExit);
 		btnExit.addActionListener(exitAction);
 		
@@ -91,6 +87,8 @@ public class MainDialog extends JDialog {
 		
 		edtOutput = new JTextField("");
 		edtOutput.setBounds(10, 35, 535, 20);
+		Font t = edtOutput.getFont().deriveFont(Font.BOLD);
+		edtOutput.setFont(t);
 		pnlFile.add(edtOutput);
 		
 		btnChooseOutput = new JButton("...");
@@ -153,7 +151,15 @@ public class MainDialog extends JDialog {
 			public void windowOpened(WindowEvent e) {
 			}
 		});
+		
+		setDefaultOutputFolder();
 	}
+
+	private void setDefaultOutputFolder() {
+		String s = System.getProperty("user.dir");
+		edtOutput.setText(s);
+	}
+
 
 	private JMenuBar getMenuBar() {
 		if (mbMain == null) {
