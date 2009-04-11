@@ -14,11 +14,13 @@ public class AddFolderCallback implements IFolderChooserCallback, Runnable {
 	private File root;
 	private static final int DEPTH = 10;
 	private MainDialog dialog;
+	private boolean includeSubFolder;
 	
 	
 	public AddFolderCallback(MainDialog dialog) {
 		this.model = dialog.getListTableModel();
 		this.dialog = dialog;
+		this.includeSubFolder = dialog.getIncludeSubFolder();
 	}
 	
 	public void chooseFolder(File f) {
@@ -47,7 +49,7 @@ public class AddFolderCallback implements IFolderChooserCallback, Runnable {
 		}
 		for (int i=0; i<files.length; i++) {
 			File f = files[i];
-			if (f.isDirectory()) {
+			if (f.isDirectory() && includeSubFolder) {
 				getFiles(f, depth + 1);
 			}
 			String fn = f.getAbsolutePath();

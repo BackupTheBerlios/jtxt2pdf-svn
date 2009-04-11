@@ -240,4 +240,9 @@ public class MainDialog extends JDialog {
 	public ListTableModel getListTableModel() {
 		return this.listTableModel;
 	}
+
+
+	public boolean getIncludeSubFolder() {
+		return chkSubFolder.isSelected();
+	}
 }
