@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<project basedir=".." default="build" name="jTxt2PDF">
+<project basedir=".." default="distribute" name="jTxt2PDF">
 
 	<property name="target" value="1.5"/>
     <property name="source" value="1.5"/>
@@ -54,6 +54,9 @@
 		    basedir="${bin}">
 		</jar>
 
+	</target>
+		
+	<target name="distribute" depends="build">
 		
 		<copy todir="${distribute}">
 			<fileset dir="${bin}">
