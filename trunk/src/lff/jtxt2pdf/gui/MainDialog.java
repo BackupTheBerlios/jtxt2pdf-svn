@@ -9,6 +9,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -22,6 +23,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import lff.jtxt2pdf.Option;
 import lff.jtxt2pdf.Version;
 import lff.jtxt2pdf.gui.model.ListTableModel;
 import lff.jtxt2pdf.gui.render.ColoredTableRender;
@@ -46,6 +48,17 @@ public class MainDialog extends JDialog {
 	private JTable tblData;
 	private JScrollPane scData;
 	private ListTableModel listTableModel = new ListTableModel();
+	
+	//config tab
+	private JLabel lblTemplate;
+	private JLabel lblCurrentTemplate;
+	private JButton btnLoadTemplate;
+	private JButton btnSaveTemplate;
+	
+	private JLabel lblWidth;
+	private JLabel lblHeight;
+	private JTextField edtWidth;
+	private JTextField edtHeight;
 	
 	private ActionListener exitAction = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -153,6 +166,41 @@ public class MainDialog extends JDialog {
 		});
 		
 		setDefaultOutputFolder();
+		
+		//config panel
+		lblTemplate = new JLabel(I18NUtility.getMessage("md.template"));
+		lblTemplate.setBounds(20, 10, 50, 40);
+		pnlConfig.add(lblTemplate);
+		
+		lblCurrentTemplate = new JLabel(I18NUtility.getMessage("md.none"));
+		
+		lblCurrentTemplate.setBounds(65, 10, 50, 40);
+		pnlConfig.add(lblCurrentTemplate);	
+		
+		btnLoadTemplate = new JButton(I18NUtility.getMessage("md.load"));
+		btnLoadTemplate.setBounds(150, 20, 40, 20);
+		pnlConfig.add(btnLoadTemplate);
+		
+		btnSaveTemplate = new JButton(I18NUtility.getMessage("md.save"));
+		btnSaveTemplate.setBounds(200, 20, 40, 20);
+		pnlConfig.add(btnSaveTemplate);
+		
+		lblWidth = new JLabel(I18NUtility.getMessage("md.width"));
+		lblWidth.setBounds(20, 50, 50, 40);
+		pnlConfig.add(lblWidth);
+		
+		edtWidth = new JTextField(Option.getDefaultOpinion().width);
+		edtWidth.setBounds(65, 60, 40, 20);
+		pnlConfig.add(edtWidth);
+
+		lblHeight = new JLabel(I18NUtility.getMessage("md.height"));
+		lblHeight.setBounds(120, 50, 50, 40);
+		pnlConfig.add(lblHeight);
+		
+		edtHeight = new JTextField(Option.getDefaultOpinion().height);
+		edtHeight.setBounds(165, 60, 40, 20);
+		pnlConfig.add(edtHeight);		
+		
 	}
 
 	private void setDefaultOutputFolder() {

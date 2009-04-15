@@ -2,7 +2,23 @@ package lff.jtxt2pdf;
 
 public class Option {
 	
-	private static final double ratio = 2.83;
+	private static final float ratio = 2.83f;
+
+	private static Option DEFAULT_OPINION = new Option(); 
+	
+	static {
+		//unit: mm
+		DEFAULT_OPINION.width = 400;
+		DEFAULT_OPINION.height = 600;
+	}
+	
+	/*
+		Width/Height for some devices(mm):
+		iRex iLiad : 122/147
+		
+	 
+	 
+	 */
 	
 	public String fontFolder = "c:/windows/fonts/";
 	
@@ -22,14 +38,13 @@ public class Option {
 	
 	public boolean compress = true;
 	
-	//default by iliad
-	public int width = 345;
-	public int height = 417;
+	public int width;
+	public int height;
 	
 	public String toString() {
 		return "Convert Setting:\n" +
-			   "   Page Width:" + (int)(width/ratio) + " mm \n" +
-			   "   Page Height:" + (int)(height/ratio) + " mm \n" +
+			   "   Page Width:" + (int)(width) + " mm \n" +
+			   "   Page Height:" + (int)(height) + " mm \n" +
 			   "   Font Folder:" + fontFolder + "\n" +
 			   "   Font Name:" + fontName + "\n" +
 			   "   Font Bold:" + isBold + "\n" +
@@ -39,5 +54,16 @@ public class Option {
 			   "   Source Encode:" + (encode.equalsIgnoreCase("") ? "Not set" : encode) + "\n" +
 			   "   Compress File:" + compress + "\n" + 
 			   "   -------------------";	
+	}
+	
+	public static Option getDefaultOpinion() {
+		return DEFAULT_OPINION ;
+	}
+	
+	public float getRealWidth() {
+		return width * ratio;
+	}
+	public float getRealHeight() {
+		return height * ratio;
 	}
 }

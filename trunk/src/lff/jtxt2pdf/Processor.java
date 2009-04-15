@@ -26,7 +26,7 @@ public class Processor {
 		out("Ready to convert. ");
 		out(option.toString());
 		Document.compress = false;		
-		Document document = new Document(new Rectangle(option.width, option.height), 10, 10, 10, 10);
+		Document document = new Document(new Rectangle(option.getRealWidth(), option.getRealHeight()), 10, 10, 10, 10);
 
 		try {
 			Font font = getFont(option);
