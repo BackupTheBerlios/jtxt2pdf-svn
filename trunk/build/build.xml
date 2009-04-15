@@ -5,20 +5,22 @@
 	<property name="target" value="1.5"/>
     <property name="source" value="1.5"/>
 	<property name="distribute" value="distribute"/>
+	<property name="bin" value="bin"/>
+	<property name="lib" value="lib"/>	
 	
     <path id="jTxt2PDF.classpath">
-        <pathelement location="bin"/>
         <pathelement location="lib/iText-2.0.8.jar"/>
+        <pathelement location="lib/looks-2.2.1.jar"/>    	
     </path>
 	
     <target name="init" depends="clean">
-        <mkdir dir="bin"/>
+        <mkdir dir="${bin}"/>
     	<mkdir dir="${distribute}"/>
     </target>
 	
     <target name="clean">
-        <delete dir="bin"/>
-    	<delete dir="distribute"/>
+        <delete dir="${bin}"/>
+    	<delete dir="${distribute}"/>
     </target>
 	
 	<target name="build" depends="init">
@@ -31,7 +33,7 @@
 			</fileset>
 		</copy>
 		
-        <javac debug="true" destdir="bin" source="${source}" target="${target}">
+        <javac debug="true" destdir="${bin}" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="jTxt2PDF.classpath"/>
         </javac>	
@@ -48,10 +50,23 @@
 			</fileset>
 		</copy>
 		
-	    <jar destfile="${distribute}/jtxt2pdf.jar"
-		    basedir="bin">
+	    <jar destfile="${bin}/jtxt2pdf.jar"
+		    basedir="${bin}">
 		</jar>
-	    	
+
+		
+		<copy todir="${distribute}">
+			<fileset dir="${bin}">
+				<include name="*.jar"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${distribute}">
+			<fileset dir="${lib}">
+				<include name="*.jar"/>
+			</fileset>
+		</copy>
+		
 	</target>
 
 </project>
