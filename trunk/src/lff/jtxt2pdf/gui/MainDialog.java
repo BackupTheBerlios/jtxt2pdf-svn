@@ -60,6 +60,22 @@ public class MainDialog extends JDialog {
 	private JTextField edtWidth;
 	private JTextField edtHeight;
 	
+	//margin
+	private JLabel lblTopMargin;
+	private JLabel lblLeftMargin;
+	private JLabel lblRightMargin;
+	private JLabel lblBottomMargin;
+	private JTextField edtTopMargin;
+	private JTextField edtLeftMargin;
+	private JTextField edtRightMargin;
+	private JTextField edtBottomMargin;
+	
+	//font config
+	private JLabel lblFont;
+	private JTextField edtFont;
+	private JButton edtChooseFont;
+	
+	
 	private ActionListener exitAction = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(confirmExit())  {
@@ -168,28 +184,62 @@ public class MainDialog extends JDialog {
 		setDefaultOutputFolder();
 		
 		//config panel
+		
+		//Template Controls. 
+		createTemplateComponents();
+		//Width/Height Controls.
+		createWHComponents();		
+		//Margin Setting Components.
+		createMarginComponents();		
+		//Font config
+		createFontComponents();
+	}
+
+
+	private void createFontComponents() {
+		lblFont = new JLabel("Font:");
+		lblFont.setBounds(20, 220, 50, 40);
+		pnlConfig.add(lblFont);
+		
+		edtFont = new JTextField();
+		edtFont.setBounds(65, 230, 320, 20);
+		pnlConfig.add(edtFont);
+		
+		edtChooseFont = new JButton();
+		edtChooseFont.setText("...");
+		edtChooseFont.setBounds(400, 230, 30, 20);
+		edtChooseFont.addActionListener(new FontChooseListener(new FontCallback(edtFont)));
+		pnlConfig.add(edtChooseFont);
+	}
+
+
+	private void createTemplateComponents() {
 		lblTemplate = new JLabel(I18NUtility.getMessage("md.template"));
 		lblTemplate.setBounds(20, 10, 50, 40);
 		pnlConfig.add(lblTemplate);
 		
 		lblCurrentTemplate = new JLabel(I18NUtility.getMessage("md.none"));
 		
-		lblCurrentTemplate.setBounds(65, 10, 50, 40);
+		lblCurrentTemplate.setBounds(75, 10, 50, 40);
 		pnlConfig.add(lblCurrentTemplate);	
 		
 		btnLoadTemplate = new JButton(I18NUtility.getMessage("md.load"));
-		btnLoadTemplate.setBounds(150, 20, 40, 20);
+		btnLoadTemplate.setBounds(250, 20, 40, 20);
 		pnlConfig.add(btnLoadTemplate);
 		
 		btnSaveTemplate = new JButton(I18NUtility.getMessage("md.save"));
-		btnSaveTemplate.setBounds(200, 20, 40, 20);
+		btnSaveTemplate.setBounds(300, 20, 40, 20);
 		pnlConfig.add(btnSaveTemplate);
-		
+	}
+
+
+	private void createWHComponents() {
 		lblWidth = new JLabel(I18NUtility.getMessage("md.width"));
 		lblWidth.setBounds(20, 50, 50, 40);
 		pnlConfig.add(lblWidth);
 		
-		edtWidth = new JTextField(Option.getDefaultOpinion().width);
+		edtWidth = new JTextField();
+		edtWidth.setText(String.valueOf(Option.getDefaultOpinion().width));
 		edtWidth.setBounds(65, 60, 40, 20);
 		pnlConfig.add(edtWidth);
 
@@ -197,10 +247,47 @@ public class MainDialog extends JDialog {
 		lblHeight.setBounds(120, 50, 50, 40);
 		pnlConfig.add(lblHeight);
 		
-		edtHeight = new JTextField(Option.getDefaultOpinion().height);
+		edtHeight = new JTextField();
+		edtHeight.setText(String.valueOf(Option.getDefaultOpinion().height));
 		edtHeight.setBounds(165, 60, 40, 20);
-		pnlConfig.add(edtHeight);		
+		pnlConfig.add(edtHeight);
+	}
+
+
+	private void createMarginComponents() {
 		
+		lblTopMargin = new JLabel(I18NUtility.getMessage("md.margin.top"));
+		lblTopMargin.setBounds(70, 100, 80, 40);
+		pnlConfig.add(lblTopMargin);
+		
+		edtTopMargin = new JTextField();
+		edtTopMargin.setBounds(160, 110, 40, 20);
+		pnlConfig.add(edtTopMargin);
+
+		lblLeftMargin = new JLabel(I18NUtility.getMessage("md.margin.left"));
+		lblLeftMargin.setBounds(20, 135, 80, 40);
+		pnlConfig.add(lblLeftMargin);
+		
+		edtLeftMargin = new JTextField();
+		edtLeftMargin.setBounds(100, 145, 40, 20);
+		pnlConfig.add(edtLeftMargin);		
+		
+		
+		lblRightMargin = new JLabel(I18NUtility.getMessage("md.margin.right"));
+		lblRightMargin.setBounds(160, 135, 80, 40);
+		pnlConfig.add(lblRightMargin);
+		
+		edtRightMargin = new JTextField();
+		edtRightMargin.setBounds(240, 145, 40, 20);
+		pnlConfig.add(edtRightMargin);		
+		
+		lblBottomMargin = new JLabel(I18NUtility.getMessage("md.margin.bottom"));
+		lblBottomMargin.setBounds(70, 180, 80, 40);
+		pnlConfig.add(lblBottomMargin);
+		
+		edtBottomMargin = new JTextField();
+		edtBottomMargin.setBounds(160, 190, 40, 20);
+		pnlConfig.add(edtBottomMargin);
 	}
 
 	private void setDefaultOutputFolder() {
