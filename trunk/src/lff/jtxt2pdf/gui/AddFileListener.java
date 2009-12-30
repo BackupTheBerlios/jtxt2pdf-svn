@@ -66,5 +66,4 @@ class TxtFileFilter extends FileFilter {
 	public String getDescription() {
 		return "Text Files";
 	}
-	
 }

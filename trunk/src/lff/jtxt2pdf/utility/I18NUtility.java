@@ -9,7 +9,8 @@ public class I18NUtility {
 	
 	static {
 		try {
-			rb = ResourceBundle.getBundle("lff.jtxt2pdf.i18n.messages");
+			//rb = ResourceBundle.getBundle("lff.jtxt2pdf.i18n.messages");
+			rb = ResourceBundle.getBundle("lff.jtxt2pdf.i18n.messages", Locale.ENGLISH);
 		} catch (Exception e) {
 			rb = ResourceBundle.getBundle("lff.jtxt2pdf.i18n.messages", Locale.ENGLISH);
 		}

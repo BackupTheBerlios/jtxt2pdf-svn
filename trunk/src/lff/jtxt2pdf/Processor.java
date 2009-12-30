@@ -8,7 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
+import lff.jtxt2pdf.template.Template;
 import lff.jtxt2pdf.utility.FileUtility;
 
 import com.lowagie.text.Document;
@@ -21,7 +23,54 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class Processor {
 	
-	public static void process(Option option) {
+	IProgessNotify notify = null;
+	
+	public Processor() {
+		
+	}
+	
+	public Processor(IProgessNotify notify) {
+		this.notify = notify;
+	}
+	
+	private void notify(Progress pro) {
+		if (this.notify != null) {
+			notify.notify(pro);
+		}
+	}
+	
+	public void process(Template template, String outputFolder, List<String> sources) {
+		
+		out("Ready to convert. ");
+		notify.init();
+		out(template.toString());
+		Document.compress = false;		
+		Document document = new Document(new Rectangle(template.getRealWidth(), template.getRealHeight()), 10, 10, 10, 10);
+
+		try {
+			Font font = getFont(template);
+			for (int i=0; i<sources.size(); i++) {
+				String source = sources.get(i);
+				File f = new File(source);
+				String target = FileUtility.getOutputFile(f, outputFolder);
+				if (target == null) {
+					continue;
+				}
+				PdfWriter.getInstance(document, new FileOutputStream(target));
+				document.open();
+				renderFile(document, font, "UTF-8", source, i, sources.size());
+				File t = new File(target);
+				out("File " + t.getAbsolutePath() + " Generated. Size is " + t.length()/1024 + " KBytes.");
+			}
+			document.close();		
+			
+		} catch (Exception e) {
+			out("fatal exception:  " + e.getMessage());
+		}
+	}
+	
+	
+	public void process(Option option) {
 		
 		out("Ready to convert. ");
 		out(option.toString());
@@ -32,7 +81,7 @@ public class Processor {
 			Font font = getFont(option);
 			PdfWriter.getInstance(document, new FileOutputStream(option.target));
 			document.open();
-			renderFile(document, font, option.encode, option.source);
+			renderFile(document, font, option.encode, option.source, 0, 1);
 			document.close();		
 			
 			File t = new File(option.target);
@@ -42,6 +91,17 @@ public class Processor {
 		}
 	}
 
+	private static Font getFont(Template fo) throws DocumentException,
+	IOException {
+		BaseFont bfComic;
+		bfComic = BaseFont.createFont(fo.getFont(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		Font f = new Font(bfComic, fo.getSize());
+		if (fo.isBold()) {
+			f.setStyle(Font.BOLD);
+		}
+		return f;
+	}
+	
 	private static Font getFont(Option option) throws DocumentException,
 			IOException {
 		BaseFont bfComic;
@@ -53,7 +113,7 @@ public class Processor {
 		return font;
 	}
 	
-	private static void renderFile(Document document, Font font, String encode, String fileName)  {
+	private void renderFile(Document document, Font font, String encode, String fileName, int index, int total)  {
 		File f = new File(fileName);
 		InputStreamReader reader = null;
 		try {
@@ -84,6 +144,7 @@ public class Processor {
 			int c = 0;
 			String line = br.readLine();
 			int old_percent = 0;
+
 			while (line != null) {
 				//out(line);
 				document.add(new Paragraph(line, font));
@@ -91,6 +152,12 @@ public class Processor {
 				int percent = (int)(c /((float)lc) * 100);
 				if (percent != old_percent && percent % 10 == 0) {
 					out(percent + "% Finished...");
+					float totalPercentage = (float) index / (float)total;
+					totalPercentage = totalPercentage + (float)1.0 / (float) total * c /((float)lc);
+					Progress p = new Progress();
+					p.percengage = (int)(totalPercentage * 100);
+					p.msg = "Processing " + fileName;
+					this.notify(p);
 					old_percent = percent;
 				}
 				line = br.readLine();
@@ -109,6 +176,6 @@ public class Processor {
 	}	
 	
 	private static void out(String msg) {
-		
+		System.out.println(msg);
 	}
 }

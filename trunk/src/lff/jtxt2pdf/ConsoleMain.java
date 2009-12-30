@@ -32,7 +32,14 @@ public class ConsoleMain {
 		Logger.logInfo(I18NUtility.getMessage("main.license") + " " + Version.getVersion());
 		main.initArguments(argu);
 		if (main.checked()) {
-			Processor.process(main.option);
+			new Processor(new IProgessNotify() {
+				public void notify(Progress msg) {
+					System.out.println(msg.msg + " " + msg.percengage + " finished.");
+				}
+				public void init() {
+					//do not needed
+				}
+			}).process(main.option);
 		} 
 	}
 
@@ -53,7 +60,7 @@ public class ConsoleMain {
 		}
 		if (option.target == null) {
 			String s = "Target file is not set. Will be set to ";
-			option.target = FileUtility.converTail(option.source);
+			option.target = FileUtility.convertTail(option.source);
 			Logger.logInfo(s + option.target);
 		}
 		
