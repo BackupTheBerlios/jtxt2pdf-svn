@@ -70,6 +70,12 @@
 			</fileset>
 		</copy>
 		
+		<copy todir="${distribute}\template">
+			<fileset dir="template">
+				<include name="*.properties"/>
+			</fileset>
+		</copy>
+		
 	</target>
 
 </project>
